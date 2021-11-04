@@ -5,10 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
+/**
+ * @group Authentication
+ *
+ * API endpoints for managing authentication
+ */
 class AuthController extends Controller
 {
-    //
+    /**
+     * Log in the user.
+     *
+     * @bodyParam   email    string  required    The email of the  user.      Example: testuser@example.com
+     * @bodyParam   password    string  required    The password of the  user.   Example: secret
+     *
+     * @response {
+     *  "access_token": "{{$jwt_token}}",
+     *  "token_type": "Bearer",
+     * }
+     */
     public function login(Request $request)
     {
         if ($request->isMethod('post')) {
@@ -20,6 +36,9 @@ class AuthController extends Controller
             if (Auth::attempt($credentials)) {
                 if (Auth::user()->role == 1) {
                     $request->session()->regenerate();
+                    $jwt_token = JWTAuth::attempt($credentials);
+                    session(['jwt_token' => $jwt_token]); // authenticate the token and save into the session
+
                     return redirect()->route('admin.dashboard');
                 } else {
                     return redirect('/');
@@ -40,6 +59,4 @@ class AuthController extends Controller
         }
         return redirect('/admin');
     }
-
-
 }

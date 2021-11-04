@@ -22,7 +22,7 @@ class DepartmentSeeder extends Seeder
 
             // this method will include datetime 
             $department = new Department(); // make temperory row
-            $department->name = $faker->jobTitle;  // create fake info
+            $department->name = $faker->company;  // create fake info
             $department->save(); // save new info and automatically save created and updated date
         }
     }

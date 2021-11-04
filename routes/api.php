@@ -19,4 +19,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login', [ApiController::class, 'login']);
+Route::post('/login', [ApiController::class, 'login'])->name('api.login');
+
+// Route::post('/dashboard', [ApiController::class, 'dashboard']);
+
+Route::group([
+    'middleware' => 'auth.jwt',
+
+], function () {
+    Route::post('/dashboard', [ApiController::class, 'dashboard']);
+});

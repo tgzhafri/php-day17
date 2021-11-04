@@ -15,10 +15,17 @@ class AdminController extends Controller
 
     public function dashboard()
     {
+        $jwt_token = session('jwt_token');
         $userCount = DB::table('users')->count();
         $jobCount = DB::table('jobs')->count();
         $deptCount = DB::table('departments')->count();
-        return view('admin.dashboard', ['userCount' => $userCount, 'jobCount' => $jobCount, 'deptCount' => $deptCount]);
+        return view('admin.dashboard', compact('jwt_token', 'userCount', 'jobCount', 'deptCount'));
+        // return view('admin.dashboard', [
+        //     'userCount' => $userCount,
+        //     'jobCount' => $jobCount,
+        //     'deptCount' => $deptCount,
+        //     'jwt_token' => $jwt_token,
+        // ]);
     }
     public function user()
     {
@@ -70,16 +77,26 @@ class AdminController extends Controller
             // ])->save();
 
             $user = User::create($requestData);
+            $status = "New user $user->name has been added!";
+            return redirect('admin/userRegister')->with('status', $status);
         }
         return view('admin.userRegister');
     }
-    public function destroy(User $user)
+    public function userDestroy($id)
     {
-        $this->authorize('delete', $user);
+        $status = "";
+        $user = User::findOrFail($id);
+        if ($id == 1) {
 
+            $status = "$user->name ID: $user->id cannot be deleted!";
+            return redirect('admin/user')->with('status', $status);
+        }
+        $status = "";
+        $user = User::findOrFail($id);
         $user->delete();
 
-        return back();
+        $status = "Record User ID: $user->id, $user->name has been deleted!";
+        return redirect('admin/user')->with('status', $status);
     }
     public function job()
     {
@@ -125,10 +142,20 @@ class AdminController extends Controller
                 'max_salary' => 'required',
             ]);
 
-            $requestData = $request;
-            $job = Job::create($requestData);
+            $job = Job::create($request->all());
+            $status = "New job title: $job->name has been added!";
+            return redirect('admin/jobRegister')->with('status', $status);
         }
         return view('admin.jobRegister');
+    }
+    public function jobDestroy($id)
+    {
+        $status = "";
+        $job = Job::findOrFail($id);
+        $job->delete();
+
+        $status = "Record Job ID: $job->id, $job->title has been deleted!";
+        return redirect('admin/job')->with('status', $status);
     }
     public function department()
     {
@@ -151,7 +178,7 @@ class AdminController extends Controller
             $department->name = $request->name;
             $department->save();
             $status = "Record $department->id updated!";
-            return redirect('admin/jobEdit/' . $department->id)->with('status', $status);
+            return redirect('admin/departmentEdit/' . $department->id)->with('status', $status);
         }
 
         return view(
@@ -160,5 +187,28 @@ class AdminController extends Controller
                 "department" => $department,
             ]
         )->with("status", $status);
+    }
+    public function departmentRegister(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $request->validate([
+                'name' => 'required|unique:departments', //ensure to point at the right table in database
+
+            ]);
+
+            $department = Department::create($request->all());
+            $status = "Department $department->name has been added!";
+            return redirect('admin/departmentRegister')->with('status', $status);
+        }
+        return view('admin.departmentRegister');
+    }
+    public function departmentDestroy($id)
+    {
+        $status = "";
+        $department = Department::findOrFail($id);
+        $department->delete();
+
+        $status = "Record department ID: $department->id, $department->name has been deleted!";
+        return redirect('admin/department')->with('status', $status);
     }
 }
