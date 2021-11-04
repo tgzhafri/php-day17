@@ -47,7 +47,7 @@
                             <p>Password</p>
                             <input type="password" name="password" id="password">
                             <br><br>
-                            <input type="submit">
+                            <input type="submit" class="btn btn-primary">
                         </div>
 
                     </form>

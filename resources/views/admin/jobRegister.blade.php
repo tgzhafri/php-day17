@@ -50,7 +50,7 @@
                             <p>Maximum Salary</p>
                             <input type="text" name="max_salary" id="max_salary">
                             <br><br>
-                            <input type="submit">
+                            <input type="submit" class="btn btn-primary">
                         </div>
 
                     </form>

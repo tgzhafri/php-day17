@@ -41,7 +41,7 @@
                             <p>Department Name</p>
                             <input type="text" name="name" id="name">
                             <br><br>
-                            <input type="submit">
+                            <input type="submit" class="btn btn-primary">
                         </div>
 
                     </form>
