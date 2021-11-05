@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('create-user', function() {
+    $user = new User();
+    $user->name = 'Tengku Zhafri';
+    $user->email = 'tgzhafri@invokeisdata.com';
+    $user->password = bcrypt('password');
+    $user->save();
+
+    return response()->json('user created');
+});
+
+Route::get('queue-email', function() {
+    $email_list['email'] = 'tgzhafri@invokeisdata.com';
+    $user = User::whereId(2)->first();
+    $email_list['user'] = $user;
+    dispatch(new \App\Jobs\QueueJob($email_list));
+    return response()->json($email_list['email']);
 });
 
 //prefix means url will start with admin/...
@@ -47,16 +66,4 @@ Route::prefix('admin')->group(function () {
         Route::any('/jobDestroy/{id}', [AdminController::class, 'jobDestroy'])->name('jobDestroy');
 
     });
-
-
-
-
 });
-
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/users', [UserController::class, 'index'])->name('users');
-
-//     Route::any('/company/edit/{id}', [CompanyController::class, 'edit'])
-//     ->middleware('signed2')
-//     ->name('company.edit');
-// });

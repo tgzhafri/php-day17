@@ -28,4 +28,5 @@ Route::group([
 
 ], function () {
     Route::post('/dashboard', [ApiController::class, 'dashboard']);
+    Route::post('/users', [ApiController::class, 'users']);
 });

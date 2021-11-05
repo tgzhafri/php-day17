@@ -32,7 +32,7 @@ endpoints:
       - POST
     uri: api/login
     metadata:
-      title: 'Get a JWT via given credentials.'
+      title: 'Login API'
       description: ''
       authenticated: false
     headers:
@@ -43,31 +43,69 @@ endpoints:
     bodyParameters:
       email:
         name: email
-        description: 'Must be a valid email address.'
+        description: 'The email of the  user.'
         required: true
-        example: gulgowski.reva@example.net
+        example: superadmin@invoke.com
         type: string
       password:
         name: password
-        description: 'Must be at least 6 characters.'
+        description: 'The password of the  user.'
         required: true
-        example: nituj
+        example: password
         type: string
-    responses: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+           "access_token": {{token}},
+           "token_type": "Bearer",
+          }
+        headers: []
+        description: '200'
     responseFields: []
   -
     httpMethods:
       - POST
     uri: api/dashboard
     metadata:
-      title: ''
-      description: ''
-      authenticated: false
+      title: Dashboard
+      description: |-
+        Check that the service is up. If everything is okay, you'll get a 200 OK Response
+
+        Otherwise, the request will fail with a 400 error, and a response list
+      authenticated: true
     headers:
       Content-Type: application/json
       Accept: application/json
+      Authorization: 'Bearer {{token}}'
     urlParameters: []
     queryParameters: []
     bodyParameters: []
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/users
+    metadata:
+      title: |-
+        User API
+        Get all the user by pagination
+      description: ''
+      authenticated: true
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      Authorization: 'Bearer {{token}}'
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      page:
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 1
+        type: integer
     responses: []
     responseFields: []

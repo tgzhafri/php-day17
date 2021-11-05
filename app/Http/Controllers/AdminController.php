@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\JsonTrait;
 use App\Models\Department;
-use App\Models\Job;
+use App\Models\EmployeeJob;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,12 +13,11 @@ use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     //
-
     public function dashboard()
     {
         $jwt_token = session('jwt_token');
         $userCount = DB::table('users')->count();
-        $jobCount = DB::table('jobs')->count();
+        $jobCount = DB::table('employee_jobs')->count();
         $deptCount = DB::table('departments')->count();
         return view('admin.dashboard', compact('jwt_token', 'userCount', 'jobCount', 'deptCount'));
         // return view('admin.dashboard', [
@@ -100,7 +100,7 @@ class AdminController extends Controller
     }
     public function job()
     {
-        $jobs = Job::paginate(10);
+        $jobs = EmployeeJob::paginate(10);
 
         return view(
             'admin.job',
@@ -111,7 +111,7 @@ class AdminController extends Controller
     }
     public function jobEdit(Request $request)
     {
-        $job = Job::whereId($request->id)->first(); // easier readability
+        $job = EmployeeJob::whereId($request->id)->first(); // easier readability
 
         $status = "";
         // post/get parameter 'name', and save it into database
@@ -142,7 +142,7 @@ class AdminController extends Controller
                 'max_salary' => 'required',
             ]);
 
-            $job = Job::create($request->all());
+            $job = EmployeeJob::create($request->all());
             $status = "New job title: $job->title has been added!";
             return redirect('admin/jobRegister')->with('status', $status);
         }
@@ -151,7 +151,7 @@ class AdminController extends Controller
     public function jobDestroy($id)
     {
         $status = "";
-        $job = Job::findOrFail($id);
+        $job = EmployeeJob::findOrFail($id);
         $job->delete();
 
         $status = "Record Job ID: $job->id, $job->title has been deleted!";

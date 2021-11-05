@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\Department;
-use App\Models\Job;
+use App\Models\Employee;
+use App\Models\EmployeeJob;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 // use Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 // use JWTAuth;
+use App\Http\Traits\JsonTrait;
 
 class ApiController extends Controller
 {
+    use JsonTrait;
+
     /**
      * Create a new ApiController instance.
      *
@@ -26,9 +29,16 @@ class ApiController extends Controller
         // not a good practice cos have to change many place,
         // $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
-
     /**
-     * Get a JWT via given credentials.
+     * Login API
+     *
+     * @bodyParam   email    string  required    The email of the  user.      Example: superadmin@invoke.com
+     * @bodyParam   password    string  required    The password of the  user.   Example: password
+     *
+     * @response {
+     *  "access_token": {{token}},
+     *  "token_type": "Bearer",
+     * }
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -40,7 +50,11 @@ class ApiController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return $this->jsonResponse(
+                $validator->errors(),
+                'Invalid Input Parameters',
+                422
+            ); // Error 422 = parameter / application error code
         }
 
         if (!$token = JWTAuth::attempt($validator->validated())) {
@@ -49,15 +63,59 @@ class ApiController extends Controller
 
         return $this->createNewToken($token);
     }
+    /**
+     * Dashboard
+     *
+     * Check that the service is up. If everything is okay, you'll get a 200 OK Response
+     * 
+     * Otherwise, the request will fail with a 400 error, and a response list
+     * 
+     * @authenticated
+     * @header Authorization Bearer {{token}}
+     * @reponse 401 scenario="invalid token"
+     */
     public function dashboard(Request $request)
     {
         $user_total = User::count();
-        $job_total = Job::count();
+        $job_total = EmployeeJob::count();
+        $employee = Employee::whereId(1)
+            ->with(['user', 'jobHistory'])
+            ->first();
         $department_total = Department::count();
         $code = 0;
-        return response()->json(
-            compact('user_total','job_total','department_total','code')
+
+        return $this->jsonResponse(
+            // compact('user_total', 'job_total', 'department_total','code'),
+            compact('user_total', 'job_total', 'department_total','employee','code'),
+            '',
+            200
         );
+        // return response()->json(
+        //     compact('user_total', 'job_total', 'department_total', 'code')
+        // );
+    }
+    /**
+     * User API
+     * Get all the user by pagination
+     * @bodyParam page int Page number for pagination. Example: 1
+     * @authenticated
+     * @header Authorization Bearer {{token}}
+     */
+    public function users()
+    {
+        $user = User::where('id',auth()->user()->id)->first();
+
+        $response = Gate::inspect('update', $user);
+
+        if ($response->allowed()) {
+            // The action is authorized...
+            $users = User::paginate(10);
+            return $this->jsonResponse(
+                UserResource::collection($users)
+            );
+        } else {
+            echo $response->message();
+        }
     }
     /**
      * Register a User.

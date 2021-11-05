@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         //
         $faker = Faker::create();
 
-        foreach (range(1, 100) as $index) {
+        foreach (range(1, 50) as $index) {
             // this method will not include datetime
             // DB::table('companies')->insert([
             //     'name' => $faker->name,

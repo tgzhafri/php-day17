@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Job;
+use App\Models\EmployeeJob;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 
-class JobSeeder extends Seeder
+class EmployeeJobSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,7 +22,7 @@ class JobSeeder extends Seeder
         foreach (range(1, 30) as $index) {
 
             // this method will include datetime 
-            $job = new Job(); // make temperory row
+            $job = new EmployeeJob(); // make temperory row
             $job->title = $faker->jobTitle();  // create fake info
             $job->description = $faker->sentence(6);
             $job->min_salary = $faker->randomFloat(2, 1000,5000);

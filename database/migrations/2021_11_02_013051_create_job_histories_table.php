@@ -22,7 +22,7 @@ class CreateJobHistoriesTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->foreign('employee_id')->references('id')->on('employees');
-            $table->foreign('job_id')->references('id')->on('jobs');
+            $table->foreign('job_id')->references('id')->on('employee_jobs');
             $table->foreign('department_id')->references('id')->on('departments');
 
         });

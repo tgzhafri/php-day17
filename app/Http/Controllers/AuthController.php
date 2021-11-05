@@ -7,24 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-/**
- * @group Authentication
- *
- * API endpoints for managing authentication
- */
+
 class AuthController extends Controller
 {
-    /**
-     * Log in the user.
-     *
-     * @bodyParam   email    string  required    The email of the  user.      Example: testuser@example.com
-     * @bodyParam   password    string  required    The password of the  user.   Example: secret
-     *
-     * @response {
-     *  "access_token": "{{$jwt_token}}",
-     *  "token_type": "Bearer",
-     * }
-     */
     public function login(Request $request)
     {
         if ($request->isMethod('post')) {
