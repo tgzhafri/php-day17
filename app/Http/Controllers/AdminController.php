@@ -48,7 +48,7 @@ class AdminController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->save();
-            $status = "Record $user->id updated!";
+            $status = "Record User ID: $user->id, name $user->name has been updated!";
             return redirect('admin/userEdit/' . $user->id)->with('status', $status);
         }
 
@@ -121,7 +121,7 @@ class AdminController extends Controller
             $job->min_salary = $request->min_salary;
             $job->max_salary = $request->max_salary;
             $job->save();
-            $status = "Record $job->id updated!";
+            $status = "Record Job ID: $job->id, Job Title $job->title has been updated!";
             return redirect('admin/jobEdit/' . $job->id)->with('status', $status);
         }
 
@@ -143,7 +143,7 @@ class AdminController extends Controller
             ]);
 
             $job = Job::create($request->all());
-            $status = "New job title: $job->name has been added!";
+            $status = "New job title: $job->title has been added!";
             return redirect('admin/jobRegister')->with('status', $status);
         }
         return view('admin.jobRegister');
@@ -177,7 +177,7 @@ class AdminController extends Controller
         if (isset($request->name)) {
             $department->name = $request->name;
             $department->save();
-            $status = "Record $department->id updated!";
+            $status = "Record Department ID: $department->id, Department Name changes to $department->name!";
             return redirect('admin/departmentEdit/' . $department->id)->with('status', $status);
         }
 

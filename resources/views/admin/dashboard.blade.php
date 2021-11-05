@@ -4,7 +4,7 @@
 
     <!-- Begin Page Content -->
     <div class="container-fluid">
-        <h2>Dashboard</h2>
+        <h2><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</h2>
         {{-- {{ $jwt_token }} --}}
         <!-- Page Heading -->
         {{-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -23,13 +23,15 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Total Users</div>
+                                    <a href="{{ route('admin.user') }}">
+                                        Total Users</a>
+                                </div>
                                 <div id="user_total" class="h5 mb-0 font-weight-bold text-gray-800">
                                     {{ $userCount }}
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                <i class="fas fa-fw fa-user fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -37,37 +39,43 @@
             </div>
 
             <!-- Earnings (Monthly) Card Example -->
+
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Total Jobs</div>
+                                    <a href="{{ route('admin.job') }}">
+                                        Total Jobs</a>
+                                </div>
                                 <div id="job_total" class="h5 mb-0 font-weight-bold text-gray-800">
                                     {{ $jobCount }}
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                <i class="fas fa-fw fa-briefcase fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Total Departments</div>
+                                    <a href="{{ route('admin.department') }}">
+                                        Total Departments</a>
+                                </div>
                                 <div id="department_total" class="h5 mb-0 font-weight-bold text-gray-800">
                                     {{ $deptCount }}
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                <i class="fas fa-fw fa-users fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -374,30 +382,30 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    @section('scripts')
-        <script>
-            $(document).ready(function() {
-                // alert('hi');
-                $.ajax({
-                    url: '/api/dashboard',
-                    type: 'post',
-                    headers: {
-                        "Authorization": "Bearer {{ $jwt_token }}"
-                    },
-                    data: {},
-                    success: function(response) {
-                        $("#user_total").html(response.user_total);
-                        $("#job_total").html(response.job_total);
-                        $("#department_total").html(response.department_total);
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            // alert('hi');
+            $.ajax({
+                url: '/api/dashboard',
+                type: 'post',
+                headers: {
+                    "Authorization": "Bearer {{ $jwt_token }}"
+                },
+                data: {},
+                success: function(response) {
+                    $("#user_total").html(response.user_total);
+                    $("#job_total").html(response.job_total);
+                    $("#department_total").html(response.department_total);
 
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    },
-                });
+                },
+                error: function(error) {
+                    console.log(error);
+                },
             });
-        </script>
-    @endsection
+        });
+    </script>
+@endsection
 @endsection
 
 </html>

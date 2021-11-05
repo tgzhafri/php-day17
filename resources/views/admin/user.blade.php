@@ -6,7 +6,7 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Users Table</h1>
+        <h1 class="h3 mb-2 text-gray-800"><i class="fas fa-fw fa-user"></i> Users Table</h1>
         {{-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p> --}}
@@ -16,7 +16,7 @@
             <div class="card-header py-3">
                 {{-- <h6 class="m-0 font-weight-bold text-primary">Add new user</h6> --}}
                 <a href="{{ route('userRegister') }}">
-                    <button class="m-0 font-weight-bold btn btn-primary" type="button">Add new user</button>
+                    <button class="m-0 font-weight-bold btn btn-primary" type="button"><i class="fas fa-fw fa-user"></i> Add New User</button>
                 </a>
             </div>
             <div class="card-body">
@@ -27,7 +27,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>#</th>
