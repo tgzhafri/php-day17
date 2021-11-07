@@ -57,7 +57,7 @@ class UserPolicy
         // return $user->role == 1
         return $user->id == $model->id || $user->role == 1
         ? Response::allow()
-        : Response::deny('You do not own this post.');
+        : Response::deny('You are not authorize to update.');
     }
 
     /**
@@ -70,6 +70,9 @@ class UserPolicy
     public function delete(User $user, User $model)
     {
         //
+        return $user->id == $model->id || $user->role == 1
+        ? Response::allow()
+        : Response::deny('You are to authorize to delete.');
     }
 
     /**

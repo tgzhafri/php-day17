@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\UserResource;
 use App\Models\Department;
 use App\Models\Employee;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 // use JWTAuth;
 use App\Http\Traits\JsonTrait;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class ApiController extends Controller
 {
@@ -96,7 +98,8 @@ class ApiController extends Controller
     }
     /**
      * User API
-     * Get all the user by pagination
+     * 
+     * Get all users by pagination
      * @bodyParam page int Page number for pagination. Example: 1
      * @authenticated
      * @header Authorization Bearer {{token}}
@@ -116,6 +119,47 @@ class ApiController extends Controller
         } else {
             echo $response->message();
         }
+    }
+    /**
+     * Employee API
+     * 
+     * Employee details
+     * @authenticated
+     * @header Authorization Bearer {{token}}
+     */
+    public function employees(Request $request)
+    {
+        $employee = Employee::whereId(1)
+            ->with(['user', 'jobHistory'])
+            ->first();
+        // $employee = Employee::paginate(10)->with(['user','jobHistory']);
+        return $this->jsonResponse(
+            // EmployeeResource::collection($employee)
+            compact('employee'),
+            '',
+            200
+        );
+    }
+        /**
+     * Get Employee API
+     * 
+     * Get employee details
+     * @bodyParam page int Page number for pagination. Example: 1
+     * @authenticated
+     * @header Authorization Bearer {{token}}
+     */
+    public function getEmployee(Request $request)
+    {
+        $employee = Employee::paginate(10);
+            // ->with(['user', 'jobHistory'])
+            // ->first();
+        // $employee = Employee::paginate(10)->with(['user','jobHistory']);
+        return $this->jsonResponse(
+            // EmployeeResource::collection($employee)
+            compact('employee'),
+            '',
+            200
+        );
     }
     /**
      * Register a User.
@@ -158,14 +202,14 @@ class ApiController extends Controller
         return response()->json(['message' => 'User successfully signed out']);
     }
 
-    // /**
-    //  * Refresh a token.
-    //  *
-    //  * @return \Illuminate\Http\JsonResponse
-    //  */
-    // public function refresh() {
-    //     return $this->createNewToken(auth()->refresh());
-    // }
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh() {
+        return $this->createNewToken(auth()->refresh());
+    }
 
     /**
      * Get the authenticated User.

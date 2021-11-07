@@ -21,12 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [ApiController::class, 'login'])->name('api.login');
 
-// Route::post('/dashboard', [ApiController::class, 'dashboard']);
-
 Route::group([
     'middleware' => 'auth.jwt',
 
 ], function () {
     Route::post('/dashboard', [ApiController::class, 'dashboard']);
     Route::post('/users', [ApiController::class, 'users']);
+    Route::post('/employees', [ApiController::class, 'employees']);
+    Route::post('/getEmployees', [ApiController::class, 'getEmployee']);
+
 });

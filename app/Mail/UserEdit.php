@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class QueueEmail extends Mailable 
+class UserEdit extends Mailable 
 {
     use Queueable, SerializesModels;
     protected $email_list;
@@ -16,11 +16,9 @@ class QueueEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($email_list)
+    public function __construct()
     {
         //
-        $this->email_list = $email_list;
-
     }
 
     /**
@@ -30,10 +28,10 @@ class QueueEmail extends Mailable
      */
     public function build()
     {
-        return $this->view(
-            'emails.testQueueMail',
+        return $this->markdown(
+            'emails.users.user_edit',
             [
-                'email_list'=> $this->email_list
+                'email_list' => $this->email_list
             ]
         );
     }

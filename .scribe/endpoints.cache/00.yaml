@@ -89,10 +89,8 @@ endpoints:
       - POST
     uri: api/users
     metadata:
-      title: |-
-        User API
-        Get all the user by pagination
-      description: ''
+      title: 'User API'
+      description: 'Get all users by pagination'
       authenticated: true
     headers:
       Content-Type: application/json
@@ -107,5 +105,45 @@ endpoints:
         required: false
         example: 1
         type: integer
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/getEmployees
+    metadata:
+      title: 'Get Employee API'
+      description: 'Get employee details'
+      authenticated: true
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      Authorization: 'Bearer {{token}}'
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      page:
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 1
+        type: integer
+    responses: []
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: api/employees
+    metadata:
+      title: 'Employee API'
+      description: 'Employee details'
+      authenticated: true
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      Authorization: 'Bearer {{token}}'
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
     responses: []
     responseFields: []

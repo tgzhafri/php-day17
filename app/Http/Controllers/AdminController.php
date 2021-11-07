@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\JsonTrait;
+use App\Mail\UserEdit;
 use App\Models\Department;
 use App\Models\EmployeeJob;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -49,7 +51,9 @@ class AdminController extends Controller
             $user->email = $request->email;
             $user->save();
             $status = "Record User ID: $user->id, name $user->name has been updated!";
+                       
             return redirect('admin/userEdit/' . $user->id)->with('status', $status);
+        
         }
 
         return view(

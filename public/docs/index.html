@@ -53,7 +53,7 @@
                             <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
                     </ul>
             <ul class="toc-footer" id="last-updated">
-            <li>Last updated: November 5 2021</li>
+            <li>Last updated: November 7 2021</li>
         </ul>
 </div>
 <div class="page-wrapper">
@@ -368,14 +368,13 @@ fetch(url, {
         </p>
                 </form>
 
-            <h2 id="endpoints-POSTapi-users">User API
-Get all the user by pagination</h2>
+            <h2 id="endpoints-POSTapi-users">User API</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-
+<p>Get all users by pagination</p>
 
 <span id="example-requests-POSTapi-users">
 <blockquote>Example request:</blockquote>
@@ -473,6 +472,196 @@ fetch(url, {
 <p>Page number for pagination.</p>
         </p>
         </form>
+
+            <h2 id="endpoints-POSTapi-getEmployees">Get Employee API</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Get employee details</p>
+
+<span id="example-requests-POSTapi-getEmployees">
+<blockquote>Example request:</blockquote>
+
+
+<pre><code class="language-bash">curl --request POST \
+    "http://127.0.0.1:8000/api/getEmployees" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "Authorization: Bearer {{token}}" \
+    --data "{
+    \"page\": 1
+}"
+</code></pre>
+
+<pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/getEmployees"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {{token}}",
+};
+
+let body = {
+    "page": 1
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre>
+</span>
+
+<span id="example-responses-POSTapi-getEmployees">
+</span>
+<span id="execution-results-POSTapi-getEmployees" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-getEmployees"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-getEmployees"></code></pre>
+</span>
+<span id="execution-error-POSTapi-getEmployees" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-getEmployees"></code></pre>
+</span>
+<form id="form-POSTapi-getEmployees" data-method="POST"
+      data-path="api/getEmployees"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json","Authorization":"Bearer {{token}}"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-getEmployees', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-getEmployees"
+                    onclick="tryItOut('POSTapi-getEmployees');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-getEmployees"
+                    onclick="cancelTryOut('POSTapi-getEmployees');" hidden>Cancel
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-getEmployees" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/getEmployees</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-getEmployees" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTapi-getEmployees"
+                                                                data-component="header"></label>
+        </p>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>page</code></b>&nbsp;&nbsp;<small>integer</small>     <i>optional</i> &nbsp;
+                <input type="number"
+               name="page"
+               data-endpoint="POSTapi-getEmployees"
+               value="1"
+               data-component="body" hidden>
+    <br>
+<p>Page number for pagination.</p>
+        </p>
+        </form>
+
+            <h2 id="endpoints-POSTapi-employees">Employee API</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Employee details</p>
+
+<span id="example-requests-POSTapi-employees">
+<blockquote>Example request:</blockquote>
+
+
+<pre><code class="language-bash">curl --request POST \
+    "http://127.0.0.1:8000/api/employees" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "Authorization: Bearer {{token}}"</code></pre>
+
+<pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/employees"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {{token}}",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre>
+</span>
+
+<span id="example-responses-POSTapi-employees">
+</span>
+<span id="execution-results-POSTapi-employees" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-employees"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-employees"></code></pre>
+</span>
+<span id="execution-error-POSTapi-employees" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-employees"></code></pre>
+</span>
+<form id="form-POSTapi-employees" data-method="POST"
+      data-path="api/employees"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json","Authorization":"Bearer {{token}}"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-employees', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-employees"
+                    onclick="tryItOut('POSTapi-employees');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-employees"
+                    onclick="cancelTryOut('POSTapi-employees');" hidden>Cancel
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-employees" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/employees</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-employees" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTapi-employees"
+                                                                data-component="header"></label>
+        </p>
+                </form>
 
     
 

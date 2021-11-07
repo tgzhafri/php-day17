@@ -8,8 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-// use Illuminate\Support\Facades\Mail;
-use App\Mail\QueueEmail; 
+use App\Mail\QueueEmail;
+use App\Mail\UserEdit;
 use Illuminate\Support\Facades\Mail;
 
 class QueueJob implements ShouldQueue
@@ -36,7 +36,8 @@ class QueueJob implements ShouldQueue
     public function handle()
     {
         //
-        $email = new QueueEmail($this->email_list);
+        // $email = new QueueEmail($this->email_list);
+        $email = new UserEdit($this->email_list);
         Mail::to($this->email_list['email'])->send($email);
     }
 }

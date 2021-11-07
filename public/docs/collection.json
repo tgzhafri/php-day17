@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel",
-        "_postman_id": "9289589c-c626-4bb3-8c74-aceca9b514b2",
+        "_postman_id": "67107a74-4723-43b4-93d4-ab7cc33e92da",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -138,7 +138,7 @@
                     "response": []
                 },
                 {
-                    "name": "User API\nGet all the user by pagination",
+                    "name": "User API",
                     "request": {
                         "url": {
                             "protocol": "http",
@@ -166,7 +166,70 @@
                             "mode": "raw",
                             "raw": "{\"page\":1}"
                         },
-                        "description": ""
+                        "description": "Get all users by pagination"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Employee API",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/getEmployees",
+                            "query": [],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/getEmployees"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"page\":1}"
+                        },
+                        "description": "Get employee details"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Employee API",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "{{baseUrl}}",
+                            "path": "api\/employees",
+                            "query": [],
+                            "raw": "http:\/\/{{baseUrl}}\/api\/employees"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Employee details"
                     },
                     "response": []
                 }
