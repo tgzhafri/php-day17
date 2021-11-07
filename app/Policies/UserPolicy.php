@@ -58,6 +58,7 @@ class UserPolicy
         return $user->id == $model->id || $user->role == 1
         ? Response::allow()
         : Response::deny('You are not authorize to update.');
+
     }
 
     /**
@@ -72,7 +73,7 @@ class UserPolicy
         //
         return $user->id == $model->id || $user->role == 1
         ? Response::allow()
-        : Response::deny('You are to authorize to delete.');
+        : Response::deny('You are not authorize to delete.');
     }
 
     /**

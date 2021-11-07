@@ -16,7 +16,8 @@
             <div class="card-header py-3">
                 {{-- <h6 class="m-0 font-weight-bold text-primary">Add new user</h6> --}}
                 <a href="{{ route('userRegister') }}">
-                    <button class="m-0 font-weight-bold btn btn-primary" type="button"><i class="fas fa-fw fa-user"></i> Add New User</button>
+                    <button class="m-0 font-weight-bold btn btn-primary" type="button"><i class="fas fa-fw fa-user"></i> Add
+                        New User</button>
                 </a>
             </div>
             <div class="card-body">
@@ -34,6 +35,9 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Updated At</th>
+                                @can('update', $users)
+                                    <th>Action</th>
+                                @endcan
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,6 +47,9 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Updated At</th>
+                                @can('update', $users)
+                                    <th>Action</th>
+                                @endcan
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -54,11 +61,17 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->updated_at }}</td>
+                                        @can('update', $users)
+                                            <td>
+                                                <a href="{{ route('userEdit', ['id' => $user->id]) }}">
+                                                    <button type="button" class="btn btn-secondary">Edit</button>
+                                                </a>
+                                            </td>
+                                        @endcan
                                         <td>
                                             <a href="{{ route('userEdit', ['id' => $user->id]) }}">
                                                 <button type="button" class="btn btn-secondary">Edit</button>
                                             </a>
-
                                         </td>
                                     </tr>
                                 @endforeach

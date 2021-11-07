@@ -43,7 +43,7 @@ class AdminController extends Controller
     public function userEdit(Request $request)
     {
         $user = User::whereId($request->id)->first(); // easier readability
-
+        $this->authorize('update', $user);
         $status = "";
         // post/get parameter 'name', and save it into database
         if (isset($request->name)) {
@@ -89,7 +89,9 @@ class AdminController extends Controller
     public function userDestroy($id)
     {
         $status = "";
+
         $user = User::findOrFail($id);
+
         if ($id == 1) {
 
             $status = "$user->name ID: $user->id cannot be deleted!";
